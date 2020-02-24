@@ -1,18 +1,20 @@
 <template>
   <div id="app">
-    <top-header></top-header>
+    <the-header></the-header>
     <transition name="page">
       <router-view class="main"></router-view>
     </transition>
+    <the-footer></the-footer>
   </div>
 </template>
 
 <script>
-import TopHeader from "./components/TopHeader";
-
+import TheHeader from "./components/TheHeader";
+import TheFooter from "./components/TheFooter";
 export default {
   components: {
-    TopHeader
+    TheHeader,
+    TheFooter
   }
 };
 </script>
@@ -22,7 +24,6 @@ body, ul {
   padding: 0;
   margin: 0;
 }
-
 a {
   text-decoration: none;
 }
