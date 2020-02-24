@@ -1,4 +1,4 @@
-# syder-bokvengers
+# SYDER_2020 - Bokvengers
 
 ## Project setup
 ```
