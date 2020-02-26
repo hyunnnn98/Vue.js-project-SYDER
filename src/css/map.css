@@ -1,0 +1,288 @@
+.map {
+  height: 690px;
+  min-height: 690px;
+  /* overflow: hidden; */
+}
+
+.daumMap {
+  width: 100%;
+  height: 690px;
+}
+
+.control,
+.carState,
+.mousePoint {
+  position: absolute;
+  z-index: 1;
+  /* overflow: hidden; */
+  font-weight: bold;
+}
+
+.control {
+  width: 80px;
+  height: 240px;
+  top: 80px;
+  right: 0px;
+}
+
+.carState {
+  width: 400px;
+  height: auto;
+  left: 1rem;
+  top: 39rem;
+  background-color: rgba(255, 255, 255, 0.87);
+  text-align: center;
+  border-collapse: collapse;
+  box-shadow: 0px 2px 5px rgb(165, 165, 165);
+}
+
+.mousePoint {
+  width: 310px;
+  height: 30px;
+  line-height: 30px;
+  right: 1rem;
+  top: 41.5rem;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.781);
+  color: rgb(26, 24, 24);
+  border: 1.5px solid rgb(59, 59, 59);
+  box-shadow: 0px 2px 5px rgb(165, 165, 165);
+}
+
+.mousePoint > span {
+  padding: 5px;
+}
+
+.carState > tr > td {
+  width: 100px;
+  /* padding: 5px; */
+  border: 2px solid rgb(97, 97, 97);
+}
+
+.carState > tr:nth-child(2) {
+  font-size: 2rem;
+  line-height: 1rem;
+}
+
+.carState > tr > td > p {
+  position: relative;
+  bottom: 5px;
+  margin-left: 1rem;
+  display: inline-block;
+}
+
+.carState > tr > td > img {
+  width: 35px;
+}
+
+.control > div:hover {
+  border: 4px solid rgb(2, 92, 194) !important;
+}
+/* 우측 상단 챠랑관련 버튼 제어 */
+#btnCar,
+#btnWayPoint,
+#btnRoute,
+#btnSchool {
+  display: block;
+  position: relative;
+  left: 10px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  background-color: white;
+  border: 4px solid rgb(71, 71, 71);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.control > div > img {
+  width: 80%;
+  position: relative;
+  top: 15%;
+}
+#btnCar {
+  top: 10px;
+}
+#btnWayPoint {
+  top: 20px;
+}
+#btnRoute {
+  top: 30px;
+}
+#btnSchool {
+  top: 40px;
+}
+
+/* 우측 차량 제어 상세 버튼 세부관리 */
+#numberOfCar,
+#selectPoint {
+  display: none;
+  width: 200px;
+  height: 65px;
+  position: absolute;
+  top: -6px;
+  left: -205px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.671);
+  border: 3px solid rgb(2, 92, 194);
+  box-shadow: 0px 2px 5px rgb(165, 165, 165);
+}
+
+#numberOfCar > li:hover {
+  background-color: rgb(250, 80, 122);
+  color: white;
+}
+
+#btnCar:hover > ul {
+  display: flex;
+}
+
+#btnRoute:hover > div {
+  display: flex;
+}
+
+#selectPoint {
+  height: 120px;
+}
+
+#selectPoint > ul {
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
+
+#selectPoint > ul > li {
+  width: 180px;
+  height: 30px;
+  font-size: 0.9rem;
+}
+
+#selectPoint > ul > li:nth-of-type(3) {
+  text-align: center;
+  margin: 0.55rem auto;
+  width: 60px;
+  height: auto;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0px 1px 2px rgb(165, 165, 165);
+  background-color: rgb(46, 192, 89);
+  color: white;
+}
+
+#numberOfCar > li > img {
+  /* padding: 5px; */
+  width: 35px;
+  height: auto;
+}
+
+#carNumber > li:hover {
+  background-color: red;
+}
+
+/*              마커 관련 style              */
+.wayPointName,
+.carName,
+.carInfo,
+.routeInfo {
+  position: relative;
+  left: 0px;
+  bottom: -35px;
+  border-radius: 10px;
+  float: left;
+  padding: 2px 8px;
+  border: 1px solid rgb(187, 187, 187);
+  font-size: 0.9rem;
+  background: rgba(247, 247, 247, 0.76);
+  font-family: "배달의민족 주아";
+}
+
+.carName {
+  bottom: -28px;
+  left: -2px;
+}
+
+.carInfo {
+  display: none;
+  padding: 20px;
+  bottom: 130px;
+  left: -60px;
+  background: rgba(247, 247, 247, 0.699);
+}
+
+.markInfo:hover .carInfo {
+  display: block;
+}
+
+.routeInfo {
+  /* background: rgb(255, 255, 255); */
+  bottom: 20px;
+  left: -2px;
+  padding: 10px 20px;
+  z-index: 900;
+}
+
+.route:after, .carInfo:after {
+  z-index: 900;
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  content: "";
+  margin-left: -12px;
+  width: 22px;
+  height: 12px;
+  opacity: 0.6;
+  background: url("http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+}
+
+.routeInfo > p:nth-of-type(1) {
+  font-size: 1.4rem;
+  color: blue;
+  padding-bottom: 5px;
+}
+
+.carInfo:after {
+  bottom: -12px;
+}
+
+.wayPointName:nth-of-type(n),
+.carName:nth-of-type(n),
+.carInfo:nth-of-type(n) {
+  border: 0;
+  box-shadow: 0px 1px 2px rgb(165, 165, 165);
+}
+
+/* 사용자 컨트롤 (확대축소, 지도타입) */
+.radius_border {
+  border: 4px solid rgb(71, 71, 71);
+  border-radius: 10px;
+}
+
+.custom_zoomcontrol {
+  position: absolute;
+  top: 35rem;
+  right: 1.2rem;
+  width: 50px;
+  height: 90px;
+  overflow: hidden;
+  z-index: 1;
+  background-color: #ffffff;
+}
+
+.custom_zoomcontrol span {
+  display: block;
+  width: 36px;
+  height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.custom_zoomcontrol span img {
+  position: relative;
+  top: 1.5px;
+  left: 1.5px;
+  width: 40px;
+  height: 40px;
+  padding: 2px 2px;
+  border: none;
+}
+/* .custom_zoomcontrol span:nth-of-type(1) {
+} */
