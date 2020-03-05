@@ -1,0 +1,26 @@
+/* 운행정보 분석 1st 기본 뼈대 페이지 */
+.sysMgmt {
+  /* background: red; */
+  padding: 20px;
+  min-width: 1400px;
+  background: #F7F6F9;
+}
+
+
+.mgmt_main {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.title {
+  display: inline-block;
+  margin-top: 1rem;
+  margin-left: 1.4rem;
+  padding: 1rem 2rem;
+  font-family: "Jua";
+  font-size: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 3px 8px rgb(165, 165, 165);
+  background-color: rgba(81, 230, 173, 0.755);
+}
