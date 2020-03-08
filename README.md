@@ -5,20 +5,8 @@
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 2020.03.08
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+라라벨 - 뷰 연동 성공.
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
