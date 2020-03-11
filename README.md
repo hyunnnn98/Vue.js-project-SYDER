@@ -1,24 +1,20 @@
-# syder-bokvengers
+# SYDER_2020 - Bokvengers
 
 ## Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 2020.03.08
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+라라벨 - 뷰 연동 성공.
 ```
 
-### Lints and fixes files
+### 2020.03.12
 ```
-npm run lint
+라라벨 - 뷰 연동간에 시스템페이지 - 웨이포인트 설정 완료하였음.
+1. 웨이포인트 불러오기
+2. 웨이포인트 추가,수정,삭제 관련 API 적용
+3. DaumMAP API간에 내부 API 변경하여 marker클릭시 자동으로 데이터 받아오게 설정하였음.
+4. 부트스트랩 적용하였음.
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
