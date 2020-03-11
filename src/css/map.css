@@ -1,0 +1,374 @@
+.map {
+  height: 730px;
+  padding: 15px;
+}
+
+.daumMap {
+  box-shadow: 0px 5px 10px rgb(160, 159, 159);
+  width: 100%;
+  height: 690px;
+}
+
+/* 맵 우측 버튼 관련 CSS */
+.control,
+.carState,
+.mousePoint,
+.custom_zoomcontrol {
+  z-index: 1;
+  position: absolute;
+  font-weight: bold;
+}
+
+.control {
+  width: 80px;
+  height: 240px;
+  top: 80px;
+  right: 0.2rem;
+}
+
+.control > div:hover {
+  border: 2px solid rgb(2, 92, 194) !important;
+}
+
+.carState {
+  width: auto;
+  height: auto;
+  left: 1.5rem;
+  top: 42.1rem;
+  background-color: rgba(255, 255, 255, 0.952);
+  text-align: center;
+  border-collapse: collapse;
+  box-shadow: 0px 2px 10px rgb(165, 165, 165);
+  font-family: "Jua";
+  font-weight: 500;
+}
+
+.mousePoint {
+  width: 280px;
+  height: 30px;
+  right: 1.5rem;
+  top: 44.3rem;
+  line-height: 30px;
+  text-align: center;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.938);
+  /* border: 1.5px solid rgb(59, 59, 59); */
+  box-shadow: 0px 2px 10px rgb(165, 165, 165);
+}
+
+.mousePoint > span {
+  padding: 5px;
+}
+
+/* 좌측 하단 차량 상태 간판 CSS */
+.carState > tr > td {
+  width: 100px;
+  border: 2px solid rgb(97, 97, 97);
+}
+
+.carState > tr:nth-child(2) {
+  height: 40px;
+  font-size: 2rem;
+  line-height: 1rem;
+}
+
+.carState > tr > td > p {
+  position: relative;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  display: inline-block;
+}
+
+.carState > tr > td > img {
+  position: relative;
+  bottom: 3px;
+  width: 40px;
+}
+/* 우측 상단 챠랑관련 버튼 제어 */
+#btnCar,
+#btnWayPoint,
+#btnRoute,
+#btnSchool {
+  display: block;
+  position: relative;
+  left: 10px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  background-color: white;
+  border: 1.5px solid rgb(71, 71, 71);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.control > div > img {
+  width: 80%;
+  position: relative;
+  top: 15%;
+}
+#btnCar {
+  top: 10px;
+}
+#btnWayPoint {
+  top: 20px;
+}
+#btnRoute {
+  top: 30px;
+}
+#btnSchool {
+  top: 40px;
+}
+
+/* 우측 차량 제어 상세 버튼 세부관리 */
+#numberOfCar,
+#selectPoint {
+  display: none;
+  width: 200px;
+  height: auto;
+  position: absolute;
+  top: -6px;
+  left: -205px;
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(2, 92, 194);
+  box-shadow: 0px 2px 5px rgb(165, 165, 165);
+}
+
+#numberOfCar > li:hover {
+  background-color: rgb(205, 250, 80);
+  color: white;
+}
+
+#btnRoute:hover > div,
+#btnCar:hover > ul {
+  display: flex;
+}
+
+#selectPoint {
+  width: auto;
+  height: 150px;
+  top: -6px;
+  left: -200px;
+}
+
+#searchRoute {
+  margin: 0 auto;
+  padding: 10px;
+}
+
+#searchRoute > li {
+  margin-bottom: 1rem;
+  width: 170px;
+  height: 30px;
+  font-size: 0.9rem;
+}
+
+.selectRoute {
+  width: 170px;
+  padding: 0.6em 0.5em;
+  border: 1px solid #999;
+  font-family: inherit;
+  border-radius: 0px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* 익스플로러 기본 화살표 제거 */
+.selectRoute::-ms-expand {
+  display: none;
+}
+
+/* 길찾기 - 검색버튼 */
+#searchRoute > li:nth-of-type(3) {
+  text-align: center;
+  margin: 0 auto;
+  width: 160px;
+  height: auto;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0px 1px 2px rgb(165, 165, 165);
+  background-color: rgb(46, 192, 89);
+  color: white;
+}
+
+#searchRoute > li:nth-of-type(3):hover {
+  background-color: rgb(39, 165, 77);
+}
+
+#numberOfCar > li > img {
+  /* padding: 5px; */
+  width: 35px;
+  height: auto;
+}
+
+/*  + - 버튼 CSS */
+/* 사용자 컨트롤 (확대축소, 지도타입) */
+.custom_zoomcontrol {
+  top: 38rem;
+  right: 1.5rem;
+  width: 50px;
+  height: 86px;
+  background-color: #ffffff;
+  border: 1.5px solid rgb(71, 71, 71);
+  border-radius: 10px;
+}
+
+.custom_zoomcontrol span {
+  display: block;
+  width: auto;
+  height: auto;
+  text-align: center;
+  cursor: pointer;
+}
+
+.custom_zoomcontrol span img {
+  width: 40px;
+  height: 40px;
+  padding: 4px;
+}
+
+/*              마커 관련 style              */
+.wayPointName,
+.carName,
+.carInfo,
+.routeInfo,
+.autoControlInfo {
+  position: relative;
+  left: 0px;
+  bottom: -35px;
+  border-radius: 10px;
+  float: left;
+  padding: 2px 8px;
+  border: 1px solid rgb(187, 187, 187);
+  font-size: 0.9rem;
+  background: rgba(247, 247, 247, 0.76);
+  font-family: "Jua";
+}
+
+.carName {
+  bottom: -28px;
+  left: -2px;
+}
+
+.carInfo {
+  display: none;
+  padding: 20px;
+  bottom: 130px;
+  left: -53px;
+  background: rgba(247, 247, 247, 0.699);
+}
+
+/* 차 이름에 마우스 오버시 배터리 잔량  */
+.markInfo:hover .autoControlDiv, .markInfo:hover .carInfo {
+  display: block;
+}
+
+.routeInfo {
+  /* background: rgb(255, 255, 255); */
+  bottom: 20px;
+  left: -2px;
+  padding: 10px 20px;
+  z-index: 900;
+}
+
+.route:after,
+.carInfo:after {
+  z-index: 900;
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  content: "";
+  margin-left: -12px;
+  width: 22px;
+  height: 12px;
+  opacity: 0.6;
+  background: url("http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+}
+
+.routeInfo > p:nth-of-type(1) {
+  font-size: 1.4rem;
+  color: blue;
+  padding-bottom: 5px;
+}
+
+/* carInfo 말풍선 화살표 */
+.carInfo:after {
+  bottom: -12px;
+}
+
+.wayPointName:nth-of-type(n),
+.carName:nth-of-type(n),
+.carInfo:nth-of-type(n) {
+  border: 0;
+  box-shadow: 0px 1px 2px rgb(165, 165, 165);
+}
+
+/* 오토 컨트롤 */
+.autoControlInfo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px 10px;
+  width: 100px;
+  height: 60px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.692);
+}
+
+.autoControlAcessButton {
+  display: flex;
+  /* background-color: red; */
+}
+
+.autoControlAcessButton > p {
+  background-color: rgb(255, 255, 255);
+  border: 1.5px solid rgb(99, 99, 99);
+  border-radius: 10px;
+  box-shadow: 0px 1px 5px rgb(165, 165, 165);
+  margin: 0 auto;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.autoControlAcessButton > p:nth-of-type(1) {
+  background-color: rgb(155, 236, 62);
+}
+
+.autoControlAcessButton > p:nth-of-type(1):hover {
+  background-color: rgb(195, 255, 126);
+}
+
+.autoControlDiv {
+  display: none;
+  position: absolute;
+  /* background-color: red; */
+  top: 50px;
+  right: 75px;
+  width: 120px;
+  height: 80px;
+}
+
+/* 웨이포인트 관리 마커 CSS */
+.markInfo:hover .markUpdate {
+  display: block;
+}
+
+.markUpdate {
+  display: none;
+  position: absolute;
+  top: 3.8rem;
+  left: -1.8rem;
+  /* border: 1px solid rgb(187, 187, 187);
+  background: rgba(247, 247, 247, 0.76); */
+  width: 100px;
+  height: 50px;
+
+  text-align: center;
+}
+
+.markUpdate > button {
+  font-size: 0.8rem;
+   box-shadow: 0px 1px 5px rgb(165, 165, 165);
+}
