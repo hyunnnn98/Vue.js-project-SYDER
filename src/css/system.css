@@ -1,0 +1,42 @@
+/*** views/SystemPage MAIN ***/
+.system-box {
+  width: 1600px;
+  margin: 0 auto;
+}
+
+/*** views/SystemPage - ROUTER MAIN ***/
+.SYSTEM-MAIN {
+  padding: 10px 15px 50px 10px;
+  /* background-color: red; */
+}
+
+/*** DAUM MAP ***/
+.MAP {
+  width: 1000px;
+  height: 600px;
+  box-shadow: 0px 3px 10px rgb(85, 85, 85);
+}
+
+/*** 맵 제외 content ***/
+.SYSTEM-CONTENT {
+  display: flex;
+  justify-content: center;
+}
+
+.SYSTEM-RIGHT {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+    font-family: "Gothic A1";
+}
+
+/* BUTTON */
+/* 웨이포인트 관리 - UL TAG */
+.plus select, textarea {
+  width: 100%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.plus li {
+  margin: 10px 0px;
+}

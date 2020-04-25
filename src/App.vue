@@ -1,32 +1,53 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <the-header></the-header>
+    <spinner :loading="loadingStatus"></spinner>
+    <transition name="page">
+      <router-view></router-view>
+    </transition>
+    <the-footer></the-footer>
   </div>
 </template>
 
+<script>
+import TheHeader from './components/TheHeader';
+import TheFooter from './components/TheFooter';
+import Spinner from './components/Spinner.vue';
+import bus from './utils/bus.js';
+
+export default {
+  components: {
+    TheHeader,
+    TheFooter,
+    Spinner,
+  },
+  data() {
+    return {
+      loadingStatus: false,
+    };
+  },
+  methods: {
+    startSpinner() {
+      this.loadingStatus = true;
+    },
+    endSpinner() {
+      this.loadingStatus = false;
+    },
+  },
+  created() {
+    bus.$on('start:spinner', this.startSpinner);
+    bus.$on('end:spinner', this.endSpinner);
+    // 이벤트 버스는 이벤트가 계속 쌓이기 때문에 beforeDestroy를 통해 이벤트를 없애 줘야 함!!!!!
+  },
+  beforeDestroy() {
+    bus.$off('start:spinner', this.startSpinner);
+    bus.$off('end:spinner', this.endSpinner);
+  },
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+@import url('./css/reset.css');
+@import url('./css/form.css');
+@import url('./css/map.css');
 </style>
