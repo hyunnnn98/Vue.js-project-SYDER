@@ -49,6 +49,11 @@ export default {
       return this.$store.state.wayPoint;
     },
   },
+  watch: {
+    fixedCars: () => {
+      this.setMarker('fixedCars');
+    },
+  },
   data: () => ({
     map: null, // 지도 객체. 지도가 로드되면 할당
     appKey: process.env.VUE_APP_DAUM_APPKEY, // appkey
@@ -353,6 +358,19 @@ export default {
     });
     bus.$on('go-Back-Home', () => {
       this.goBackHome();
+    });
+    bus.$on('updateCar', locationData => {
+      // fixedCars.delete 속성이 true/false로 바뀌어가면서 다음 marker를 찍어야 한다.
+      // 여기 첫번째 들어갈 로직이 만약, 화면상에 차량이 띄워져있으면
+      // 마커 지우고 -> 마커 재생성 과정이 필요하다.
+      if (this.fixedCars.delete == true) {
+        this.fixedCars.delete = false;
+        this.setMarker('fixedCars');
+      }
+
+      this.fixedCars.location = locationData;
+      this.setMarker('fixedCars');
+      this.fixedCars.delete = true;
     });
   },
 };

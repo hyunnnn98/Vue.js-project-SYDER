@@ -1,24 +1,37 @@
-# syder-bokvengers
+# SYDER_2020 - Bokvengers
 
 ## Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 2020.03.08
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+라라벨 - 뷰 연동 성공.
 ```
 
-### Lints and fixes files
+### 2020.03.12
 ```
-npm run lint
+라라벨 - 뷰 연동간에 시스템페이지 - 웨이포인트 설정 완료하였음.
+1. 웨이포인트 불러오기
+2. 웨이포인트 추가,수정,삭제 관련 API 적용
+3. DaumMAP API간에 내부 API 변경하여 marker클릭시 자동으로 데이터 받아오게 설정하였음.
+4. AWS S3 자동배포 설정 완료.
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 2020.04.05
+```
+라라벨 - 뷰 연동간에 시스템페이지 - 웨이포인트 설정 완료하였음.
+1. 웨이포인트 불러오기
+2. 웨이포인트 추가,수정,삭제 관련 API 적용
+3. DaumMAP API간에 내부 API 변경하여 marker클릭시 자동으로 데이터 받아오게 설정하였음.
+4. AWS S3 자동배포 설정 완료.
+5. 백엔드 CORS오류 관련건 해결 완료. 공용 api처리 관련 url 변경하였음.
+6. DAUM API 관련 로직 VueX로 데이터 공용화 처리 하였음.
+```
+
+### 2020.04.26
+```
+1. Node.js 서버 -> Socket 통신 연결
+2. 차량 이동 모듈 제작.
+```
