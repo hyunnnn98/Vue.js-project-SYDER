@@ -15,65 +15,58 @@ export default {
   },
   data() {
     return {
-      socket: io(process.env.VUE_APP_SERVER_URL),
+      socket: io('http://hyun9803.iptime.org:3333/admin'),
       location: [
         {
           name: '1호차',
-          lat: '35.89528963522',
-          lng: '128.6235199856',
+          lat: '35.89619659025773',
+          lng: '128.62042088452992',
           status: '운행중',
+          change: '',
         },
         {
           name: '2호차',
-          lat: '35.89528963522',
-          lng: '128.6235199856',
+          lat: '35.895967013250626',
+          lng: '128.62040512961283',
           status: '운행중',
+          change: '',
         },
         {
           name: '3호차',
-          lat: '35.89528963522',
-          lng: '128.6235199856',
+          lat: '35.89585283325085',
+          lng: '128.6205190895765',
           status: '운행중',
+          change: '',
         },
       ],
     };
   },
   mounted() {
     bus.$emit('end:spinner');
-    this.socket.emit('connectCar', '1호차');
-
-    // 지금 생각해보니 location을 왜 배열로 감싼건지 모르겠네... => 다음번 수정 때 오브젝트형식으로 바꾸자.
     this.socket.on('updateLocation', Info => {
-      // const locationData = {
-      //     carNumber = res.name,
-      //     carLat = res.lat,
-      //     carLng = res.lng
-      // }
       console.log('서버로부터 데이터 받아왔음!');
-      switch (Info.carNumber) {
-        case '1호차':
-          this.location[0].lat = Info.carLat;
-          this.location[0].lng = Info.carLng;
-          break;
-        case '2호차':
-          this.location[1].lat = Info.carLat;
-          this.location[1].lng = Info.carLng;
-          break;
-        case '3호차':
-          this.location[2].lat = Info.carLat;
-          this.location[2].lng = Info.carLng;
-          break;
+      let carNum = 0;
+      for (let i = 0; i < this.location.length; i++) {
+        if (this.location[i].name == Info.carNumber) {
+          this.location[i].change = true;
+          this.location[i].lat = Info.carLat;
+          this.location[i].lng = Info.carLng;
+          console.log('바꿀차량의 정보', this.location[i]);
+        } else {
+          this.location[i].change = false;
+        }
       }
+
       console.log('위치 업데이트', this.location);
       bus.$emit('updateCar', this.location);
     });
 
     // 서버의 변경사항을 수신
-    // this.socket.on('MESSAGE', (data) => {
-    //     this.messages = [...this.messages, data];
+    // this.socket.on('MESSAGE', data => {
+    //   this.messages = [...this.messages, data];
     // });
     // 서버에 변경사항 전송
-    // this.socket.emit('SEND_MESSAGE', {message});
+    // this.socket.emit('SEND_MESSAGE', { message });
   },
 };
 </script>

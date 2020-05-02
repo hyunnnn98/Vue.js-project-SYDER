@@ -12,9 +12,10 @@
       @click="mouseClick"
       @mousemove="mouseMove"
     ></VueDaumMap>
-    <map-sider-bar :cars="fixedCars.cars"></map-sider-bar>
+    <!-- 좌측 상단 차량관리 메뉴 div -->
+    <map-sider-bar :cars="cars"></map-sider-bar>
     <!-- 우측 상단 맵 셋팅 버튼 div -->
-    <map-side-button :cars="fixedCars.cars"></map-side-button>
+    <map-side-button :cars="cars"></map-side-button>
     <!-- 좌측 하단 차량 상태 div -->
     <map-car-state></map-car-state>
     <!-- 위도, 경도 표식 div -->
@@ -43,12 +44,6 @@ import MapSideButton from './mapControl/MapSideButton.vue';
 
 export default {
   components: { VueDaumMap, MapSiderBar, MapCarState, MapSideButton },
-  computed: {
-    getWayPoint() {
-      // console.log('WayPoint 불러왔음!');
-      return this.$store.state.wayPoint;
-    },
-  },
   watch: {
     fixedCars: () => {
       this.setMarker('fixedCars');
@@ -63,43 +58,22 @@ export default {
     libraries: ['drawing'], // 추가로 불러올 라이브러리
     scrollwheel: false,
     // ======== 여기까지가 기본 맵 data =======
+    cars: ['1호차', '2호차', '3호차'],
     mouseMovePoint: { lat: null, lng: null },
     mouseClickPoint: { lat: null, lng: null },
-    routeSimulationValue: { lat: [], lng: [], name: [] },
     setRoute: { load: false, route: null },
     fixedCars: {
       markers: [],
       customOverlay: [],
       delete: true,
-      cars: ['1호차', '2호차', '3호차'],
-      location: [
-        {
-          name: '1호차',
-          lat: '35.89536207369231',
-          lng: '128.62332765392847',
-          status: '이상차량',
-        },
-        {
-          name: '2호차',
-          lat: '35.896279612631304',
-          lng: '128.62027860119983',
-          status: '운행대기',
-        },
-        {
-          name: '3호차',
-          lat: '35.89670113828357',
-          lng: '128.62290661375532',
-          status: '운행중',
-        },
-      ],
+      // 차량 초기 위치는 학교 주차장으로 임시 설정.
+      location: [],
     },
     fixedMarkers: {
       markers: [],
       customOverlay: [],
       delete: true,
-      location: [
-        // Store에서 받아오는 데이터 공간.
-      ],
+      location: [],
     },
   }),
   methods: {
@@ -107,7 +81,7 @@ export default {
       this.map = map;
       // var mapTypeControl = new kakao.maps.MapTypeControl();
       // map.addControl(mapTypeControl, kakao.maps.ControlPosition.BOTTOMRIGHT + 10);
-      this.fixedMarkers.location = this.getWayPoint;
+      this.fixedMarkers.location = this.$store.state.wayPoint;
     },
     mouseMove(mouseMovePoint) {
       this.mouseMovePoint.lat = mouseMovePoint[0].latLng.Ha.toFixed(6);
@@ -122,8 +96,9 @@ export default {
       this.center.lng = 128.62202439342738;
     },
     setMarker(dataset) {
-      console.log('dataset: ', dataset);
+      // console.log('마커 타입: ', dataset);
       // setMarker 초기화 작업
+      console.log('마커 데이터셋', this.fixedCars);
       let imgUrl = null,
         className = null,
         content = null,
@@ -153,8 +128,16 @@ export default {
       length = dataset.location.length;
 
       if (markerSet === true) {
+        console.log('마커 생성 영역입니다.');
         for (let i = 0; i < length; i++) {
-          console.log('for문 진입했음');
+          // 변경되지 않는 마커값은 뛰어넘기로 함
+          if (
+            dataset === this.fixedCars &&
+            dataset.location[i].change == false
+          ) {
+            console.log(`${i + 1} 번째 마커는 변경되지 않았습니다.`);
+            continue;
+          }
 
           // 현재 location 설정
           let markerPosition = new kakao.maps.LatLng(
@@ -166,7 +149,7 @@ export default {
           if (dataset === this.fixedCars) {
             const status = dataset.location[i].status;
             content = `<div class="markInfo">
-                        <div class=${className}>${dataset.location[i].name}</div>
+                        <div class=${className} id=${dataset.location[i].name}>${dataset.location[i].name}</div>
                         <div class="carInfo">
                           <div>배터리: 90%</div>
                           <div>누적이동거리: 2.3KM</div>
@@ -238,24 +221,55 @@ export default {
           dataset.customOverlay.push(customOverlay);
           // 마커를 지도에 생성
           marker.setMap(this.map);
+
+          if (dataset == this.fixedCars) {
+            // console.log('접속!');
+            // this.$store.commit('setCarLocation', this.fixedCars.location);
+          } else {
+            dataset.delete = !markerSet;
+          }
         }
       } else {
         // 시뮬레이션 과정중일땐 지도에 생성 후 자동삭제.
-        // console.log("getData: ", this.fixedMarkers[0].markers.length);
-        for (let i in dataset.markers) {
-          dataset.markers[i].setMap(null);
-          dataset.customOverlay[i].setMap(null);
+        console.log('마커 삭제 영역입니다.');
+        if (dataset == this.fixedCars) {
+          for (let i in dataset.location) {
+            if (dataset.markers.length == 0) {
+              break;
+            } else if (dataset.location[i].change == true) {
+              let data = dataset.markers[0].Pa.Qe.innerText;
+              let count = data.indexOf(dataset.location[i].name) / 4;
+
+              console.log('count', count);
+              if (count != 0 && count != 1 && count != 2) break; // 초기설정 값이 없는 경우 마커 삭제 명령 취소
+
+              dataset.markers[count].setMap(null);
+              // dataset.markers[count + 1].setMap(null);
+              dataset.customOverlay[count].setMap(null);
+              // dataset.customOverlay[count + 1].setMap(null);
+              dataset.markers.splice(count, 1);
+              dataset.customOverlay.splice(count, 1);
+            }
+          }
+          dataset.delete = !markerSet;
+        } else {
+          for (let i in dataset.markers) {
+            dataset.markers[i].setMap(null);
+            dataset.customOverlay[i].setMap(null);
+          }
+          // fixed 마커의 배열 초기화.
+          dataset.markers.splice(0);
+          dataset.customOverlay.splice(0);
+          dataset.delete = !markerSet;
         }
-        // fixed 마커의 배열 초기화.
-        dataset.markers.splice(0);
-        dataset.customOverlay.splice(0);
       }
-      dataset.delete = !markerSet;
     },
     routeSimulation() {
+      // 넘어올 때 path정보, 출발 ~ 도착지 정보 전송해줘야 함.
       if (this.setRoute.load === false) {
         this.setRoute.route = new kakao.maps.Polyline({
           map: this.map,
+          // 여기를 동적으로 path값 넣어 줘야 함.
           path: [
             new kakao.maps.LatLng(35.89623422094425, 128.62013646906556),
             new kakao.maps.LatLng(35.896279612631304, 128.62027860119983),
@@ -363,12 +377,13 @@ export default {
       // fixedCars.delete 속성이 true/false로 바뀌어가면서 다음 marker를 찍어야 한다.
       // 여기 첫번째 들어갈 로직이 만약, 화면상에 차량이 띄워져있으면
       // 마커 지우고 -> 마커 재생성 과정이 필요하다.
+      this.fixedCars.location = locationData;
+
+      // 마커가 이미 떠 있는 상태  delete == true 면 초기화 작업 실행.
       if (this.fixedCars.delete == true) {
         this.fixedCars.delete = false;
         this.setMarker('fixedCars');
       }
-
-      this.fixedCars.location = locationData;
       this.setMarker('fixedCars');
       this.fixedCars.delete = true;
     });

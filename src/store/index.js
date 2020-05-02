@@ -19,9 +19,27 @@ export default new Vuex.Store({
     username: getUserFromCookie() || '',
     token: getAuthFromCookie() || '',
     // ***  다음 맵  ***
-    points: [],
-    // ***  차량 정보 ***
-    cars: [],
+    points: [], // 웨이포인트 위치정보
+    cars: [
+      {
+        name: '1호차',
+        lat: '',
+        lng: '',
+        status: '',
+      },
+      {
+        name: '2호차',
+        lat: '',
+        lng: '',
+        status: '',
+      },
+      {
+        name: '3호차',
+        lat: '',
+        lng: '',
+        status: '',
+      },
+    ], //  차량 위치정보
   },
   getters: {
     isLogin(state) {
@@ -32,6 +50,9 @@ export default new Vuex.Store({
     // ** 지도 관련 mutations 처리 **
     setWaypoint(state, points) {
       state.points = points;
+    },
+    setCarLocation(state, cars) {
+      state.cars = cars;
     },
     // ** 회원관련 mutations 처리 **
     setUsername(state, username) {
