@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/store/index';
 import bus from '@/utils/bus';
+import Axios from 'axios';
+import { afterAuth } from '@/api/index';
 
 Vue.use(VueRouter);
 
@@ -17,14 +19,7 @@ const routes = [
     component: () => import('@/views/MapPage.vue'),
     beforeEnter: (to, from, next) => {
       bus.$emit('start:spinner');
-      store
-        .dispatch('FETCH_POINTS')
-        .then(data => {
-          console.log('서버로부터 웨이포인트 셋팅:', data.message);
-        })
-        .catch(err => {
-          console.log('error: ', err);
-        });
+      store.dispatch('FETCH_POINTS');
       next();
     },
   },
@@ -32,7 +27,7 @@ const routes = [
     path: '/system',
     name: 'system',
     meta: { auth: true },
-    component: () => import('../views/SystemPage.vue'),
+    component: () => import('@/views/SystemPage.vue'),
     beforeEnter: (to, from, next) => {
       bus.$emit('start:spinner');
       next();
@@ -54,7 +49,7 @@ const routes = [
     path: '/analysis',
     name: 'analysis',
     meta: { auth: true },
-    component: () => import('../views/AnalysisPage.vue'),
+    component: () => import('@/views/AnalysisPage.vue'),
     beforeEnter: (to, from, next) => {
       bus.$emit('start:spinner');
       bus.$off('set:pageTitle');
@@ -126,6 +121,24 @@ router.beforeEach((to, from, next) => {
     console.log('인증이 필요합니다');
     next('/login');
     return;
+  } else if (to.meta.auth && store.getters.isLogin) {
+    // 백엔드단 토큰 재검증.
+    afterAuth
+      .get('http://13.124.189.186/api/authCheck', {
+        params: {
+          guard: 'admin',
+        },
+      })
+      .then(() => {
+        console.log('유효한 토큰값입니다!');
+        next();
+        return;
+      })
+      .catch(err => {
+        console.log('유효하지 않은 토큰입니다. 로그인 페이지로 이동합니다.');
+        next('/login');
+        return;
+      });
   }
   next();
 });

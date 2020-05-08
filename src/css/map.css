@@ -1,4 +1,5 @@
 .map {
+  width: 100%;
   height: 730px;
   padding: 15px;
 }
@@ -6,7 +7,7 @@
 .daumMap {
   box-shadow: 0px 5px 10px rgb(160, 159, 159);
   width: 100%;
-  height: 690px;
+  height: 700px;
 }
 
 /* 맵 우측 버튼 관련 CSS */
@@ -14,20 +15,10 @@
 .carState,
 .mousePoint,
 .custom_zoomcontrol {
+  font-family: 'Gothic A1';
   z-index: 1;
   position: absolute;
   font-weight: bold;
-}
-
-.control {
-  width: 80px;
-  height: 240px;
-  top: 80px;
-  right: 0.2rem;
-}
-
-.control > div:hover {
-  border: 2px solid rgb(2, 92, 194) !important;
 }
 
 .carState {
@@ -39,8 +30,8 @@
   text-align: center;
   border-collapse: collapse;
   box-shadow: 0px 2px 10px rgb(165, 165, 165);
-  font-family: "Jua";
-  font-weight: 500;
+  /* font-family: "Jua"; */
+  /* font-weight: 500; */
 }
 
 .mousePoint {
@@ -48,7 +39,7 @@
   height: 30px;
   right: 1.5rem;
   top: 44.3rem;
-  line-height: 30px;
+  line-height: 35px;
   text-align: center;
   font-size: 0.9rem;
   border-radius: 5px;
@@ -102,22 +93,44 @@
   cursor: pointer;
 }
 
+
+.control {
+  width: 80px;
+  height: 300px;
+  top: 80px;
+  right: 0.2rem;
+  font-size: 14px;
+}
+
+.control > div:hover {
+  box-sizing: border-box;
+  border: 2px solid rgb(2, 92, 194) !important;
+}
+
+.control > div > p {
+  position: absolute;
+  font-family: 'Gothic A1';
+  top: 50px;
+  left: -1px;
+  width: 50px;
+}
+
 .control > div > img {
   width: 80%;
   position: relative;
-  top: 15%;
+  top: 10%;
 }
 #btnCar {
   top: 10px;
 }
 #btnWayPoint {
-  top: 20px;
+  top: 35px;
 }
 #btnRoute {
-  top: 30px;
+  top: 60px;
 }
 #btnSchool {
-  top: 40px;
+  top: 85px;
 }
 
 /* 우측 차량 제어 상세 버튼 세부관리 */
@@ -128,7 +141,7 @@
   height: auto;
   position: absolute;
   top: -6px;
-  left: -205px;
+  left: -203px;
   border-radius: 5px;
   background-color: rgb(255, 255, 255);
   border: 2px solid rgb(2, 92, 194);
@@ -136,8 +149,8 @@
 }
 
 #numberOfCar > li:hover {
-  background-color: rgb(205, 250, 80);
-  color: white;
+  background-color: rgb(2, 92, 194);
+  color: rgb(255, 255, 255);
 }
 
 #btnRoute:hover > div,
@@ -146,10 +159,8 @@
 }
 
 #selectPoint {
-  width: auto;
-  height: 150px;
+  height: 155px;
   top: -6px;
-  left: -200px;
 }
 
 #searchRoute {
@@ -158,19 +169,19 @@
 }
 
 #searchRoute > li {
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   width: 170px;
   height: 30px;
   font-size: 0.9rem;
+  
 }
 
 .selectRoute {
   width: 170px;
   padding: 0.6em 0.5em;
   border: 1px solid #999;
-  font-family: inherit;
-  border-radius: 0px;
-  -webkit-appearance: none;
+  border-radius: 0px; /* iOS 둥근모서리 제거 */
+  -webkit-appearance: none; /* 네이티브 외형 감추기 */
   -moz-appearance: none;
   appearance: none;
 }
@@ -182,7 +193,7 @@
 /* 길찾기 - 검색버튼 */
 #searchRoute > li:nth-of-type(3) {
   text-align: center;
-  margin: 0 auto;
+  margin: 0px auto;
   width: 160px;
   height: auto;
   padding: 5px;
@@ -199,7 +210,6 @@
 #numberOfCar > li > img {
   /* padding: 5px; */
   width: 35px;
-  height: auto;
 }
 
 /*  + - 버튼 CSS */
@@ -266,9 +276,10 @@
 
 .routeInfo {
   /* background: rgb(255, 255, 255); */
+  height: 100px;
   bottom: 20px;
   left: -2px;
-  padding: 10px 20px;
+  padding: 10px 50px;
   z-index: 900;
 }
 
@@ -286,15 +297,28 @@
   background: url("http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
 }
 
+.routeInfo > p {
+  line-height: 10px;
+  font-size: 1.1rem;
+  /* padding-bottom: 3px; */
+}
+
 .routeInfo > p:nth-of-type(1) {
+  line-height: 25px;
   font-size: 1.4rem;
-  color: blue;
-  padding-bottom: 5px;
+  color: rgb(81, 39, 179);
+  /* padding-bottom: 3px; */
 }
 
 /* carInfo 말풍선 화살표 */
 .carInfo:after {
   bottom: -12px;
+}
+
+.wayPointName:nth-of-type(n), 
+.carName:nth-of-type(n) {
+  line-height: 20px;
+  height: 20px;
 }
 
 .wayPointName:nth-of-type(n),
@@ -371,4 +395,11 @@
 .markUpdate > button {
   font-size: 0.8rem;
    box-shadow: 0px 1px 5px rgb(165, 165, 165);
+}
+
+
+@media ( max-width: 768px ) {
+.carState {
+  display: none;
+}
 }

@@ -26,10 +26,10 @@
     <!-- 지도 확대, 축소 컨트롤 div-->
     <div class="custom_zoomcontrol radius_border">
       <span @click="zoomIn()">
-        <img src="../imgs/plus.png" alt="plus" />
+        <img src="@/imgs/plus.png" alt="plus" />
       </span>
       <span @click="zoomOut()">
-        <img src="../imgs/minus.png" alt="plus" />
+        <img src="@/imgs/minus.png" alt="plus" />
       </span>
     </div>
   </div>
@@ -38,9 +38,9 @@
 <script>
 import VueDaumMap from 'vue-daum-map';
 import bus from '@/utils/bus';
-import MapSiderBar from './mapControl/MapSideBar';
-import MapCarState from './mapControl/MapCarState.vue';
-import MapSideButton from './mapControl/MapSideButton.vue';
+import MapSiderBar from './MapSideBar';
+import MapCarState from './MapCarState.vue';
+import MapSideButton from './MapSideButton';
 
 export default {
   components: { VueDaumMap, MapSiderBar, MapCarState, MapSideButton },
@@ -79,8 +79,6 @@ export default {
   methods: {
     onLoad(map) {
       this.map = map;
-      // var mapTypeControl = new kakao.maps.MapTypeControl();
-      // map.addControl(mapTypeControl, kakao.maps.ControlPosition.BOTTOMRIGHT + 10);
       this.fixedMarkers.location = this.$store.state.wayPoint;
     },
     mouseMove(mouseMovePoint) {
@@ -92,13 +90,14 @@ export default {
       this.mouseClickPoint.lng = mouseMovePoint[0].latLng.Ga;
     },
     goBackHome() {
-      this.center.lat = 35.89608031958812;
-      this.center.lng = 128.62202439342738;
+      let moveLatLon = new kakao.maps.LatLng(
+        35.89608031958812,
+        128.62202439342738,
+      );
+      this.map.panTo(moveLatLon);
     },
     setMarker(dataset) {
-      // console.log('마커 타입: ', dataset);
       // setMarker 초기화 작업
-      console.log('마커 데이터셋', this.fixedCars);
       let imgUrl = null,
         className = null,
         content = null,
@@ -117,7 +116,7 @@ export default {
           this.fixedMarkers.location = this.$store.state.points;
           dataset = this.fixedMarkers;
           imgUrl =
-            'https://user-images.githubusercontent.com/52916934/75136661-b5492700-5728-11ea-9e5a-2a0085acb79b.png';
+            'https://vue-syder.s3.ap-northeast-2.amazonaws.com/img/location.6ae2867d.png';
           className = 'wayPointName';
           imageOption = { offset: new kakao.maps.Point(25, 35) };
           break;
@@ -158,18 +157,19 @@ export default {
             switch (status) {
               case '운행중':
                 imgUrl =
-                  'https://user-images.githubusercontent.com/52916934/75231587-0cb6c800-57f9-11ea-8000-cb0ee4167b3f.png';
+                  'https://vue-syder.s3.ap-northeast-2.amazonaws.com/img/car.png';
                 break;
               case '운행예약':
-                imgUrl = '';
+                imgUrl =
+                  'https://vue-syder.s3.ap-northeast-2.amazonaws.com/img/car.png';
                 break;
               case '운행대기':
                 imgUrl =
-                  'https://user-images.githubusercontent.com/52916934/75230899-d9c00480-57f7-11ea-8c07-88eec9c8b294.png';
+                  'https://vue-syder.s3.ap-northeast-2.amazonaws.com/img/parking.6a7a3c67.png';
                 break;
               case '이상차량':
                 imgUrl =
-                  'https://user-images.githubusercontent.com/52916934/75231584-0a546e00-57f9-11ea-9143-dbc76c54e74e.png';
+                  'https://vue-syder.s3.ap-northeast-2.amazonaws.com/img/accident.9b911e54.png';
                 content = `<div class="markInfo">
                             <div class=${className}>${dataset.location[i].name}</div>
                             <div class="carInfo">
@@ -227,6 +227,16 @@ export default {
             // this.$store.commit('setCarLocation', this.fixedCars.location);
           } else {
             dataset.delete = !markerSet;
+            // 마커에 클릭 이벤트 등록
+            kakao.maps.event.addListener(marker, 'click', () => {
+              // console.log('click!!!', data);
+
+              let moveLatLon = new kakao.maps.LatLng(
+                dataset.location[i].lat,
+                dataset.location[i].lng,
+              );
+              this.map.panTo(moveLatLon);
+            });
           }
         }
       } else {
@@ -264,7 +274,7 @@ export default {
         }
       }
     },
-    routeSimulation() {
+    routeSimulation(MapData) {
       // 넘어올 때 path정보, 출발 ~ 도착지 정보 전송해줘야 함.
       if (this.setRoute.load === false) {
         this.setRoute.route = new kakao.maps.Polyline({
@@ -283,28 +293,28 @@ export default {
             new kakao.maps.LatLng(35.896638175688906, 128.62242063656612),
             new kakao.maps.LatLng(35.89677889822415, 128.6231766171426),
             new kakao.maps.LatLng(35.896534311659266, 128.62327129847316),
-            new kakao.maps.LatLng(35.89636205861439, 128.6225146764999),
-            new kakao.maps.LatLng(35.89644662499194, 128.62242503324413),
-            new kakao.maps.LatLng(35.896245151363686, 128.6221634262081),
-            new kakao.maps.LatLng(35.8960728316727, 128.62241186652133),
-            new kakao.maps.LatLng(35.89544381047474, 128.62211384877017),
-            new kakao.maps.LatLng(35.895795903186894, 128.6207311225491),
-            new kakao.maps.LatLng(35.896279612631304, 128.62027860119983),
-            new kakao.maps.LatLng(35.895795903186894, 128.6207311225491),
-            new kakao.maps.LatLng(35.89544381047474, 128.62211384877017),
-            new kakao.maps.LatLng(35.89523480556241, 128.62290974598892),
-            new kakao.maps.LatLng(35.89553687190858, 128.62306265598266),
-            new kakao.maps.LatLng(35.8960750838904, 128.62241191248907),
-            new kakao.maps.LatLng(35.89553687190858, 128.62306265598266),
-            new kakao.maps.LatLng(35.89536207369231, 128.62332765392847),
-            new kakao.maps.LatLng(35.89524099125535, 128.62361866635462),
-            new kakao.maps.LatLng(35.89536207369231, 128.62332765392847),
-            new kakao.maps.LatLng(35.89589824405511, 128.623161403206),
-            new kakao.maps.LatLng(35.89595184822251, 128.6231957227864),
-            new kakao.maps.LatLng(35.89599273182369, 128.62333776402747),
-            new kakao.maps.LatLng(35.89628269956654, 128.62321909132402),
-            new kakao.maps.LatLng(35.89615722686954, 128.62266831486897),
-            new kakao.maps.LatLng(35.8963335197566, 128.62229259275298),
+            // new kakao.maps.LatLng(35.89636205861439, 128.6225146764999),
+            // new kakao.maps.LatLng(35.89644662499194, 128.62242503324413),
+            // new kakao.maps.LatLng(35.896245151363686, 128.6221634262081),
+            // new kakao.maps.LatLng(35.8960728316727, 128.62241186652133),
+            // new kakao.maps.LatLng(35.89544381047474, 128.62211384877017),
+            // new kakao.maps.LatLng(35.895795903186894, 128.6207311225491),
+            // new kakao.maps.LatLng(35.896279612631304, 128.62027860119983),
+            // new kakao.maps.LatLng(35.895795903186894, 128.6207311225491),
+            // new kakao.maps.LatLng(35.89544381047474, 128.62211384877017),
+            // new kakao.maps.LatLng(35.89523480556241, 128.62290974598892),
+            // new kakao.maps.LatLng(35.89553687190858, 128.62306265598266),
+            // new kakao.maps.LatLng(35.8960750838904, 128.62241191248907),
+            // new kakao.maps.LatLng(35.89553687190858, 128.62306265598266),
+            // new kakao.maps.LatLng(35.89536207369231, 128.62332765392847),
+            // new kakao.maps.LatLng(35.89524099125535, 128.62361866635462),
+            // new kakao.maps.LatLng(35.89536207369231, 128.62332765392847),
+            // new kakao.maps.LatLng(35.89589824405511, 128.623161403206),
+            // new kakao.maps.LatLng(35.89595184822251, 128.6231957227864),
+            // new kakao.maps.LatLng(35.89599273182369, 128.62333776402747),
+            // new kakao.maps.LatLng(35.89628269956654, 128.62321909132402),
+            // new kakao.maps.LatLng(35.89615722686954, 128.62266831486897),
+            // new kakao.maps.LatLng(35.8963335197566, 128.62229259275298),
           ],
           strokeWeight: 8,
           strokeColor: '#42b883',
@@ -326,8 +336,8 @@ export default {
 
             let content = `<div class="route">
                              <div class="routeInfo">
-                              <p>< 후문 ~ 정문 ></p>
-                              <p>총 거리 : 0.3KM</p>
+                              <p>[ ${MapData.start_point} → ${MapData.end_point} ]</p>
+                              <p>총 거리  : 0.3KM</p>
                               <p>이동시간 : 3분</p>
                              </div>
                           </div>`;
@@ -367,8 +377,8 @@ export default {
     bus.$on('set-Marker', MarkerType => {
       this.setMarker(MarkerType);
     });
-    bus.$on('route-Simulation', () => {
-      this.routeSimulation();
+    bus.$on('route-Simulation', MapData => {
+      this.routeSimulation(MapData);
     });
     bus.$on('go-Back-Home', () => {
       this.goBackHome();

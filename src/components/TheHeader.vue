@@ -41,7 +41,7 @@
           </ul>
         </li>
         <li id="linkC">
-          <router-link to="/system">시스템</router-link>
+          <router-link :to="{ name: 'setPoint' }">시스템</router-link>
           <ul class="SystemMenuUl">
             <div class="menuSystem">
               <li>
@@ -100,14 +100,15 @@ export default {
 .header {
   display: flex;
   background-color: rgba(45, 211, 147, 0.87);
-  min-width: 800px;
+  font-family: 'Gothic A1';
+  height: 43px;
 }
 
 .header-username {
-  padding-left: 0.3rem;
+  padding-left: 0.4rem;
   font-size: 0.75rem;
-  font-family: 'Gothic A1';
   color: #1e1e1e;
+  font-family: 'Gothic A1';
 }
 
 a {
@@ -116,12 +117,17 @@ a {
 }
 
 a:hover {
+  color: #1e1e1e;
   font-weight: bold;
+}
+
+a:visited {
+  /* color: rgb(255, 255, 255); */
 }
 
 .logo {
   position: absolute;
-  top: 5.5px;
+  top: 4px;
   left: 1.5rem;
   font-size: 1.8rem;
   font-weight: bold;
@@ -144,21 +150,19 @@ a:hover {
 .link > li {
   width: 200px;
   height: 43px;
-  line-height: 40px;
   text-align: center;
 }
 
 .link > li > a {
   display: block;
   width: 100%;
-  line-height: 45px;
-  font-family: 'Gothic A1';
+  line-height: 50px;
 }
 
 #linkD {
   position: absolute;
   right: 0px;
-  width: 100px;
+  width: 80px;
 }
 
 /* 평상시에는 드랍메뉴가 안보이게 하기 */
@@ -186,7 +190,7 @@ a:hover {
 .AnalysisMenuUl > div > li > a:hover,
 .SystemMenuUl > div > li > a:hover {
   color: rgb(36, 35, 35);
-  border-left: 4px solid #fffb04;
+  border-left: 4px solid #6b6b6b;
   padding-left: 17px;
 }
 
@@ -196,23 +200,13 @@ a:hover {
   width: 100%;
   color: rgb(49, 48, 48);
   line-height: 50px;
-  font-family: 'Gothic A1';
   text-align: left;
   padding-left: 20px;
 }
 
-@media screen and (max-width: 800px) {
-  .header-username,
-  #linkD {
+@media (max-width: 800px) {
+  /* .link > li {
     display: none;
-  }
-
-  .link {
-    /* margin-left: 150px; */
-  }
-
-  .link > li {
-    width: 140px;
-  }
+  } */
 }
 </style>

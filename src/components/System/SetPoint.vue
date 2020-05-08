@@ -96,13 +96,11 @@ export default {
       // *** 사용자 설정 customData ***
       customData: {
         markerType: 'fixedPoint',
-        location: [
-          {
-            lat: '',
-            lng: '',
-            name: '',
-          },
-        ],
+        location: {
+          lat: '',
+          lng: '',
+          name: '',
+        },
       },
       setPoints: false,
       resetPoints: false,
@@ -123,13 +121,14 @@ export default {
         return;
       }
       // setPoint API
-      const mapData = this.customData.location[0];
+      const mapData = this.customData.location;
       mapData.lat = this.lat;
       mapData.lng = this.lng;
       mapData.name = this.point;
+      mapData.guard = 'admin';
       try {
         const { data } = await setPoint(mapData);
-        console.log('submitForm: ', data);
+        // console.log('submitForm: ', data);
         this.logMessage = `${this.point}지점이 추가되었습니다.`;
         this.initForm();
         this.resetPoints = !this.resetPoints;
@@ -161,6 +160,7 @@ export default {
       const mapData = {
         lat: this.lat,
         lng: this.lng,
+        guard: 'admin',
       };
       const { data } = await updatePoint(this.id, mapData);
       this.logMessage = data.message;

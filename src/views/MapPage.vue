@@ -1,11 +1,12 @@
 <template>
   <div class="realTime">
+    <div class="socket_message">{{ message }}</div>
     <real-map></real-map>
   </div>
 </template>
 
 <script>
-import RealMap from '@/components/RealMap';
+import RealMap from '@/components/mapControl/RealMap';
 import bus from '@/utils/bus.js';
 import io from 'socket.io-client';
 
@@ -15,7 +16,10 @@ export default {
   },
   data() {
     return {
-      socket: io('http://hyun9803.iptime.org:3333/admin'),
+      message: '서버 연결에 실패했습니다.',
+      socket: io('http://13.124.124.67:80/admin', {
+        reconnection: false,
+      }),
       location: [
         {
           name: '1호차',
@@ -43,6 +47,23 @@ export default {
   },
   mounted() {
     bus.$emit('end:spinner');
+
+    this.socket.on('connect_error', function() {
+      // TODO 서버 연결 실패시 토스트 메세지 출력
+      console.log('Connection error!');
+      let message = document.querySelector('.socket_message');
+      message.style.visibility = 'visible';
+      message.style.opacity = '1';
+
+      setTimeout(() => {
+        message.style.opacity = '0';
+        setTimeout(() => {
+          message.style.visibility = 'hidden';
+        }, 2000);
+      }, 5000);
+    });
+
+    this.socket.on('getLocation', Info => {}); // TODO 맵 새로고침 했을 때 차량 위치 표시하기
     this.socket.on('updateLocation', Info => {
       console.log('서버로부터 데이터 받아왔음!');
       let carNum = 0;
@@ -71,4 +92,24 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.socket_message {
+  visibility: hidden;
+  opacity: 0;
+  text-align: center;
+  position: absolute;
+  top: 8.5%;
+  left: 45%;
+  z-index: 100000;
+  background-color: white;
+  box-shadow: 0px 1px 5px rgb(165, 165, 165);
+  color: red;
+  border-radius: 9px;
+  height: 20px;
+  line-height: 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 5px 15px;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+</style>

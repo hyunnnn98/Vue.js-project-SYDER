@@ -22,7 +22,10 @@
       <v-list dense nav class="py-0">
         <v-list-item two-line :class="miniVariant">
           <v-list-item-content class="sideHeader">
-            <div>2020년 4월 2일 목요일 차량관리</div>
+            <div>
+              {{ nowDate.year }}년 {{ nowDate.month }}월 {{ nowDate.date }}일
+              {{ nowDate.day }}요일 차량관리
+            </div>
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
@@ -36,18 +39,24 @@
         <v-list-item id="deliveryInfo">
           <table>
             <tr>
-              <td>배송예약</td>
+              <td>배송중</td>
               <td>배송완료</td>
+              <td>취소건수</td>
             </tr>
             <tr>
-              <td>
-                <p>03</p>
-                건
-              </td>
-              <td>
-                <p>29</p>
-                건
-              </td>
+              <td><span>03</span>건</td>
+              <td><span>29</span>건</td>
+              <td><span>05</span>건</td>
+            </tr>
+            <tr>
+              <td>대기고객</td>
+              <td>평균대기시간</td>
+              <td>평균도착시간</td>
+            </tr>
+            <tr>
+              <td><span>02</span>명</td>
+              <td><span>11</span>분</td>
+              <td><span>25</span>분</td>
             </tr>
           </table>
         </v-list-item>
@@ -101,15 +110,28 @@ export default {
   data() {
     return {
       drawer: false,
-      color: 'rgba(177, 177, 177, 0.753)',
+      color: 'rgba(45, 211, 147, 0.87)',
       right: false,
       width: 350,
       miniVariant: false,
       background: false,
       hideOverlay: true,
+      nowDate: {
+        year: '',
+        month: '',
+        date: '',
+        day: '',
+      },
     };
   },
-  computed: {},
+  mounted() {
+    const nowDate = new Date();
+    const addDayStr = ['일', '월', '화', '수', '목', '금', '토'];
+    this.nowDate.year = nowDate.getFullYear();
+    this.nowDate.month = nowDate.getMonth() + 1;
+    this.nowDate.date = nowDate.getDate();
+    this.nowDate.day = addDayStr[nowDate.getDay()];
+  },
   methods: {
     sideControl() {
       if (this.drawer === true) {
@@ -170,7 +192,6 @@ export default {
 
 .sideHeader,
 .sideContentHeader {
-  padding-top: 4px;
   font-size: 1.4rem;
 }
 
@@ -178,16 +199,15 @@ export default {
   position: relative;
   top: 15px;
   padding: 3px;
+  height: 100%;
 }
 
 .sideContent > img {
   width: 50px;
   margin-left: 5px;
-  margin-top: 4px;
 }
 
 .sideContentHeader {
-  margin-top: 7px;
   padding-left: 0.5rem;
 }
 
@@ -211,7 +231,6 @@ export default {
 
 .sideContentTable > table > tr:nth-child(1) {
   background-color: rgb(0, 130, 236);
-  /* font-family: "배달의민족 주아"; */
   font-size: 1rem;
 }
 
@@ -220,10 +239,10 @@ export default {
 }
 
 #carDetaileInfo > img {
-  width: 20px;
+  width: 25px;
   position: absolute;
   left: 220px;
-  top: 20px;
+  top: 10px;
   cursor: pointer;
 }
 
@@ -233,21 +252,23 @@ export default {
 
 #deliveryInfo {
   /* background-color: red; */
-  padding: 0px 0px 10px 0px;
+  height: 210px;
+  padding: 30px 0px 0px 0px;
 }
 
 #deliveryInfo > table {
+  background-color: rgba(255, 255, 255, 0.842);
+  border-radius: 10px;
   margin: 0 auto;
   text-align: center;
-  font-family: '배달의민족 주아';
 }
 
 #deliveryInfo > table > tr > td {
+  padding: 4px 0px;
   width: 100px;
-  padding: 10px;
 }
 
-#deliveryInfo > table > tr > td > p {
+#deliveryInfo > table > tr > td > span {
   display: inline-block;
   font-size: 3rem;
 }

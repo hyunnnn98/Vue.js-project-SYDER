@@ -7,11 +7,17 @@ function setPoint(mapData) {
 
 // 전체 웨이포인트 불러오기 API
 function getPoints() {
-  return waypoint.get('');
+  return waypoint.get('', {
+    params: {
+      guard: 'admin',
+    },
+  });
 }
 
 function deletePoint(mapId) {
-  return waypoint.delete(`/${mapId}`);
+  return waypoint.delete(`/${mapId}`, {
+    guard: 'admin',
+  });
 }
 
 function updatePoint(mapId, mapData) {

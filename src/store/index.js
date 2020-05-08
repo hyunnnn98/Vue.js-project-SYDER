@@ -76,7 +76,7 @@ export default new Vuex.Store({
         commit('setWaypoint', data.waypoints);
         return data;
       } catch (error) {
-        console.log('FETCH_WAY ERROR (미구현): ', error);
+        console.log('FETCH_WAY ERROR: ', error.message);
       }
     },
     async LOGIN({ commit }, userData) {
