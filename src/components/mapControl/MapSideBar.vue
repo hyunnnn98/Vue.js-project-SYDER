@@ -19,8 +19,8 @@
         />
         <img v-else src="../../imgs/arrow.png" alt="화살표" width="100%" />
       </div>
-      <v-list dense nav class="py-0">
-        <v-list-item two-line :class="miniVariant">
+      <v-list dense nav>
+        <!-- <v-list-item two-line :class="miniVariant">
           <v-list-item-content class="sideHeader">
             <div>
               {{ nowDate.year }}년 {{ nowDate.month }}월 {{ nowDate.date }}일
@@ -28,9 +28,9 @@
             </div>
           </v-list-item-content>
         </v-list-item>
-        <v-divider></v-divider>
+        <v-divider></v-divider> -->
         <!-- 오늘의 배송 현황 -->
-        <v-list-item class="sideContent">
+        <v-list-item class="sideContent py-2">
           <img src="../../imgs/postman.png" alt="자동차" />
           <v-list-item-content>
             <div class="sideContentHeader">오늘의 배송 현황</div>
@@ -41,12 +41,15 @@
             <tr>
               <td>배송중</td>
               <td>배송완료</td>
-              <td>취소건수</td>
+              <td>취소율</td>
             </tr>
             <tr>
               <td><span>03</span>건</td>
               <td><span>29</span>건</td>
-              <td><span>05</span>건</td>
+              <td>
+                <span>13</span>%
+                <div class="point cancel">-3.5%</div>
+              </td>
             </tr>
             <tr>
               <td>대기고객</td>
@@ -54,9 +57,15 @@
               <td>평균도착시간</td>
             </tr>
             <tr>
-              <td><span>02</span>명</td>
-              <td><span>11</span>분</td>
-              <td><span>25</span>분</td>
+              <td><span>03</span>명</td>
+              <td>
+                <span>11</span>분
+                <div class="point wait">+3분</div>
+              </td>
+              <td>
+                <span>25</span>분
+                <div class="point arrive">+10분</div>
+              </td>
             </tr>
           </table>
         </v-list-item>
@@ -83,7 +92,7 @@
               <td id="sideFullTable">출발지</td>
               <td id="sideFullTable">도착지</td>
               <td id="sideFullTable">출발시간</td>
-              <td>도착예상시간</td>
+              <td>도착 예상시간</td>
               <td id="sideFullTable">발신자</td>
               <td id="sideFullTable">수신자</td>
             </tr>
@@ -96,6 +105,53 @@
               <td>11:23</td>
               <td id="sideFullTable">조승현</td>
               <td id="sideFullTable">이주용</td>
+            </tr>
+          </table>
+        </v-list-item>
+        <v-divider></v-divider>
+        <v-list-item class="sideContent">
+          <img src="../../imgs/car.png" alt="자동차" />
+          <v-list-item-content>
+            <div class="sideContentHeader">대기고객 현황</div>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item class="sideContentTable">
+          <table @click="openCarDetaileInfo()">
+            <tr>
+              <td>순위</td>
+              <td>진행상태</td>
+              <td>대기 예상시간</td>
+              <td id="sideFullTable">도착 예상시간</td>
+              <td id="sideFullTable">배정된 차량</td>
+              <td id="sideFullTable">출발지</td>
+              <td id="sideFullTable">도착지</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>예약완료</td>
+              <td>05분</td>
+              <td id="sideFullTable">11:40</td>
+              <td id="sideFullTable">1호차</td>
+              <td id="sideFullTable">정문</td>
+              <td id="sideFullTable">도서관</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>수신자 동의 요청중</td>
+              <td>11분</td>
+              <td id="sideFullTable">11:53</td>
+              <td id="sideFullTable">3호차</td>
+              <td id="sideFullTable">본관</td>
+              <td id="sideFullTable">후문</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>수신자 동의 요청중</td>
+              <td>22분</td>
+              <td id="sideFullTable">12:10</td>
+              <td id="sideFullTable">2호차</td>
+              <td id="sideFullTable">후문</td>
+              <td id="sideFullTable">연서관</td>
             </tr>
           </table>
         </v-list-item>
@@ -122,6 +178,7 @@ export default {
         date: '',
         day: '',
       },
+      moreInfo: false,
     };
   },
   mounted() {
@@ -143,12 +200,21 @@ export default {
       }
     },
     openCarDetaileInfo() {
-      const table = document.querySelectorAll('#sideFullTable');
-      for (const td of table) {
-        td.style.display = 'table-cell';
-      }
       const sideBar = document.querySelector('.v-navigation-drawer');
-      sideBar.style.width = '60%';
+      const table = document.querySelectorAll('#sideFullTable');
+      if (this.moreInfo) {
+        sideBar.style.width = '350px';
+        for (const td of table) {
+          td.style.display = 'none';
+        }
+      } else {
+        for (const td of table) {
+          console.log(td);
+          td.style.display = 'table-cell';
+        }
+        sideBar.style.width = '60%';
+      }
+      this.moreInfo = !this.moreInfo;
     },
     closeCarDetaileInfo() {
       const sideBar = document.querySelector('.v-navigation-drawer');
@@ -203,7 +269,7 @@ export default {
 }
 
 .sideContent > img {
-  width: 50px;
+  width: 35px;
   margin-left: 5px;
 }
 
@@ -219,18 +285,18 @@ export default {
 }
 
 .sideContentTable > table > tr > td {
-  background-color: rgba(255, 255, 255, 0.795);
+  background-color: rgba(255, 255, 255, 0.925);
   border: 2px solid rgb(112, 111, 111);
   width: 150px;
   height: 30px;
 }
 
 .sideContentTable > table > tr:hover {
-  background-color: rgb(80, 80, 80);
+  background-color: rgb(51, 255, 0);
 }
 
 .sideContentTable > table > tr:nth-child(1) {
-  background-color: rgb(0, 130, 236);
+  background-color: rgb(0, 0, 0);
   font-size: 1rem;
 }
 
@@ -241,8 +307,8 @@ export default {
 #carDetaileInfo > img {
   width: 25px;
   position: absolute;
-  left: 220px;
-  top: 10px;
+  left: 205px;
+  top: 5px;
   cursor: pointer;
 }
 
@@ -251,14 +317,17 @@ export default {
 }
 
 #deliveryInfo {
-  /* background-color: red; */
-  height: 210px;
-  padding: 30px 0px 0px 0px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.445);
+  width: 320px;
+  height: 230px;
+  padding: 20px 0px 10px 0px;
+  margin-left: 5px;
 }
 
 #deliveryInfo > table {
-  background-color: rgba(255, 255, 255, 0.842);
-  border-radius: 10px;
+  /* background-color: rgba(255, 255, 255, 0.842);
+  border-radius: 10px; */
   margin: 0 auto;
   text-align: center;
 }
@@ -272,4 +341,35 @@ export default {
   display: inline-block;
   font-size: 3rem;
 }
+
+/* 배송현황 수정사항 */
+.point {
+  width: 40px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50px;
+  position: absolute;
+  /* top: 150px; */
+  right: 20px;
+  color: rgb(3, 139, 3);
+  font-size: 11px !important;
+}
+
+.point.cancel {
+  color: red;
+  top: 40px;
+}
+
+.point.wait {
+  top: 150px;
+  right: 120px;
+}
+
+.point.arrive {
+  top: 150px;
+}
+
+/* .sideContentForm img {
+  width: 400px;
+  height: 130px;
+} */
 </style>

@@ -27,4 +27,5 @@ function createInstanceWithAuth(url) {
 export const instance = createInstance();
 export const afterAuth = createInstanceWithAuth('');
 export const waypoint = createInstanceWithAuth('waypoints');
+export const routes = createInstanceWithAuth('routes');
 // export const

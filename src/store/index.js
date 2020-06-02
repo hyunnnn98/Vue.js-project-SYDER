@@ -72,7 +72,6 @@ export default new Vuex.Store({
     async FETCH_POINTS({ commit }) {
       try {
         const { data } = await getPoints();
-        // console.log('엑시오스를 통한 응답: ', data);
         commit('setWaypoint', data.waypoints);
         return data;
       } catch (error) {

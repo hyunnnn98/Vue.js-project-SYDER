@@ -17,9 +17,7 @@ export default {
   data() {
     return {
       message: '서버 연결에 실패했습니다.',
-      socket: io('http://13.124.124.67:80/admin', {
-        reconnection: false,
-      }),
+      socket: io('http://13.124.124.67:80/admin'),
       location: [
         {
           name: '1호차',
@@ -81,13 +79,6 @@ export default {
       console.log('위치 업데이트', this.location);
       bus.$emit('updateCar', this.location);
     });
-
-    // 서버의 변경사항을 수신
-    // this.socket.on('MESSAGE', data => {
-    //   this.messages = [...this.messages, data];
-    // });
-    // 서버에 변경사항 전송
-    // this.socket.emit('SEND_MESSAGE', { message });
   },
 };
 </script>

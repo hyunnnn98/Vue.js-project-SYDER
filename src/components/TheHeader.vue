@@ -205,8 +205,8 @@ a:visited {
 }
 
 @media (max-width: 800px) {
-  /* .link > li {
+  .link > li {
     display: none;
-  } */
+  }
 }
 </style>

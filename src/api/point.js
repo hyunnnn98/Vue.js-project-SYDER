@@ -16,7 +16,9 @@ function getPoints() {
 
 function deletePoint(mapId) {
   return waypoint.delete(`/${mapId}`, {
-    guard: 'admin',
+    params: {
+      guard: 'admin',
+    },
   });
 }
 

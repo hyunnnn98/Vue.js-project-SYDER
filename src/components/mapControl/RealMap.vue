@@ -136,6 +136,17 @@ export default {
           ) {
             console.log(`${i + 1} 번째 마커는 변경되지 않았습니다.`);
             continue;
+          } else {
+            console.log(`${i + 1} 번째 마커가 변경!.`);
+            // if (dataset == this.fixedCars) {
+            //   dataset.markers[0].setMap(null);
+            //   // dataset.markers[count + 1].setMap(null);
+            //   dataset.customOverlay[0].setMap(null);
+            //   // dataset.customOverlay[count + 1].setMap(null);
+            //   dataset.markers.splice(0, 1);
+            //   dataset.customOverlay.splice(0, 1);
+            //   console.log(dataset);
+            // }
           }
 
           // 현재 location 설정
@@ -157,7 +168,7 @@ export default {
             switch (status) {
               case '운행중':
                 imgUrl =
-                  'https://vue-syder.s3.ap-northeast-2.amazonaws.com/img/car.png';
+                  'https://vue-syder.s3.ap-northeast-2.amazonaws.com/img/driving.png';
                 break;
               case '운행예약':
                 imgUrl =
@@ -291,8 +302,9 @@ export default {
             new kakao.maps.LatLng(35.896245151363686, 128.6221634262081),
             new kakao.maps.LatLng(35.89644662499194, 128.62242503324413),
             new kakao.maps.LatLng(35.896638175688906, 128.62242063656612),
-            new kakao.maps.LatLng(35.89677889822415, 128.6231766171426),
-            new kakao.maps.LatLng(35.896534311659266, 128.62327129847316),
+            new kakao.maps.LatLng(35.896718, 128.622879),
+            // new kakao.maps.LatLng(35.89677889822415, 128.6231766171426),
+            // new kakao.maps.LatLng(35.896534311659266, 128.62327129847316),
             // new kakao.maps.LatLng(35.89636205861439, 128.6225146764999),
             // new kakao.maps.LatLng(35.89644662499194, 128.62242503324413),
             // new kakao.maps.LatLng(35.896245151363686, 128.6221634262081),
@@ -316,8 +328,8 @@ export default {
             // new kakao.maps.LatLng(35.89615722686954, 128.62266831486897),
             // new kakao.maps.LatLng(35.8963335197566, 128.62229259275298),
           ],
-          strokeWeight: 8,
-          strokeColor: '#42b883',
+          strokeWeight: 4,
+          strokeColor: '#007bff',
           strokeOpacity: 0.9,
           // strokeStyle: "dashed"
         });
@@ -336,9 +348,14 @@ export default {
 
             let content = `<div class="route">
                              <div class="routeInfo">
-                              <p>[ ${MapData.start_point} → ${MapData.end_point} ]</p>
-                              <p>총 거리  : 0.3KM</p>
-                              <p>이동시간 : 3분</p>
+                              <p>출발지</p>
+                              <p>${MapData.start_point}</p>
+                              <p>도착지</p>
+                              <p>${MapData.end_point}</p>
+                              <p>총 거리</p>
+                              <p>0.3km</p>
+                              <p>예상 도착시간</p>
+                              <p>3분</p>
                              </div>
                           </div>`;
 

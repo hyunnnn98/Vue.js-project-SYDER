@@ -30,8 +30,6 @@
   text-align: center;
   border-collapse: collapse;
   box-shadow: 0px 2px 10px rgb(165, 165, 165);
-  /* font-family: "Jua"; */
-  /* font-weight: 500; */
 }
 
 .mousePoint {
@@ -44,7 +42,6 @@
   font-size: 0.9rem;
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.938);
-  /* border: 1.5px solid rgb(59, 59, 59); */
   box-shadow: 0px 2px 10px rgb(165, 165, 165);
 }
 
@@ -274,15 +271,6 @@
   display: block;
 }
 
-.routeInfo {
-  /* background: rgb(255, 255, 255); */
-  height: 100px;
-  bottom: 20px;
-  left: -2px;
-  padding: 10px 50px;
-  z-index: 900;
-}
-
 .route:after,
 .carInfo:after {
   z-index: 900;
@@ -294,20 +282,46 @@
   width: 22px;
   height: 12px;
   opacity: 0.6;
-  background: url("http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+  background: url("../imgs/info_arrow.png");
 }
 
-.routeInfo > p {
-  line-height: 10px;
-  font-size: 1.1rem;
-  /* padding-bottom: 3px; */
+.routeInfo {
+  width: 150px;
+  border: 0px;
+  background: rgb(255, 255, 255);
+  height: 240px;
+  bottom: -130px;
+  left: 93px;
+  padding: 20px 25px;
+  z-index: 900;
+  font-family: 'Gothic A1';
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0px 2px 5px rgb(165, 165, 165);
 }
 
-.routeInfo > p:nth-of-type(1) {
-  line-height: 25px;
-  font-size: 1.4rem;
-  color: rgb(81, 39, 179);
-  /* padding-bottom: 3px; */
+.route:after {
+  bottom: -15px;
+  left: 62%;
+  width: 12px;
+  height: 22px;
+  opacity: 1;
+  background: url("../imgs/info_arrow_right.png");
+}
+
+.routeInfo > p:nth-of-type(2n) {
+  font-size: 1.2em;
+  /* background-color: red; */
+  height: 20px;
+  margin-top: -0.9em;
+  /* color: rgb(163, 163, 163); */
+}
+
+
+.routeInfo > p:nth-of-type(2n+1) {
+  font-size: 0.8em;
+  color: rgb(163, 163, 163);
 }
 
 /* carInfo 말풍선 화살표 */
@@ -398,7 +412,7 @@
 }
 
 
-@media ( max-width: 768px ) {
+@media ( max-width: 800px ) {
 .carState {
   display: none;
 }
